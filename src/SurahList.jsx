@@ -4,7 +4,13 @@ import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-nati
 import loadSurah from './SurahLoader';
 
 const SurahList = ({ navigation }) => {
-  const listOfSurah = surahList;
+  navigation.setOptions({
+    headerTitleStyle: {
+      fontSize: 28,
+    },
+  });
+
+  const listOfSurahs = surahList;
 
   const styles = StyleSheet.create({
     container: {
@@ -16,7 +22,7 @@ const SurahList = ({ navigation }) => {
     },
     text: {
       flexGrow: 1,
-      fontSize: 18,
+      fontSize: 28,
       color: 'black',
       padding: 8,
       borderBottomWidth: 0.5,
@@ -26,6 +32,7 @@ const SurahList = ({ navigation }) => {
       borderWidth: 1,
       padding: 2,
       paddingHorizontal: 8,
+      color: 'black',
     },
     buttonContainer: {
       display: 'flex',
@@ -39,18 +46,17 @@ const SurahList = ({ navigation }) => {
 
   const renderList = () => {
     const v = [];
-    listOfSurah.forEach(surah => {
+    listOfSurahs.forEach(surah => {
       const { verse } = loadSurah(Number(surah.index));
-
       v.push(
         <TouchableOpacity
           key={surah.index}
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('SurahViewer', { verse, name: surah.title })}>
+          onPress={() => navigation.navigate('SurahViewer', { verse, name: surah.title })}
+        >
           <Text style={styles.numberText}>{Number(surah.index)}</Text>
           <Text style={styles.text}>{surah.title}</Text>
         </TouchableOpacity>,
-        <View style={styles.horizontalLine} />,
       );
     });
     return v;
